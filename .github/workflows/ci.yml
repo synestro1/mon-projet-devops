@@ -1,0 +1,25 @@
+name: Mon Premier Pipeline CI
+
+# Quand est-ce que le robot doit travailler ?
+on:
+  push:
+    branches: [ "main" ]
+
+# Qu'est-ce qu'il doit faire ?
+jobs:
+  build-and-test:
+    # Le robot utilise une machine virtuelle Ubuntu prêtée par GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+    # Étape 1 : Le robot récupère ton code
+    - name: Checkout du code
+      uses: actions/checkout@v3
+
+    # Étape 2 : Le robot essaie de construire ton image Docker
+    - name: Test de construction Docker
+      run: docker build . --file Dockerfile --tag mon-test-image
+
+    # Étape 3 : Un petit message pour dire que tout va bien
+    - name: Message de succès
+      run: echo "Bravo ! L'image Docker se construit sans erreur."
